@@ -58,6 +58,19 @@ subprojects {
     testCompile "org.powermock:powermock-module-junit4:$powermockVersion"
     testCompile "org.powermock:powermock-api-mockito:$powermockVersion"
   }
+
+  uploadArchives {
+    repositories {
+      mavenDeployer {
+        repository(url: "https://nexus.aitinternal.org/nexus/content/repositories/adler-itech") {
+          authentication(
+                  userName: project.hasProperty('nexusUser') ? nexusUser : System.getenv("NEXUS_USER"),
+                  password:  project.hasProperty('nexusPassword') ? nexusPassword : System.getenv("NEXUS_PASSWORD")
+          )
+        }
+      }
+    }
+  }
 }
 
 task wrapper(type: Wrapper) {
